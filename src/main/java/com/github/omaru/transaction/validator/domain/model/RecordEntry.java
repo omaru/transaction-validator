@@ -1,12 +1,14 @@
 package com.github.omaru.transaction.validator.domain.model;
 
+import lombok.Builder;
 import lombok.Data;
 import org.iban4j.Iban;
 
 import java.math.BigDecimal;
 
 @Data
-public class Record {
+@Builder
+public class RecordEntry {
     private Long transactionReference;
     private Iban accountNumber;
     private BigDecimal startBalance;
