@@ -1,7 +1,9 @@
-package com.github.omaru.transaction.validator.infrastructure.csv;
+package com.github.omaru.transaction.validator.infrastructure.json;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.omaru.transaction.validator.application.port.RecordEntryReader;
 import com.github.omaru.transaction.validator.domain.model.RecordEntry;
+import com.github.omaru.transaction.validator.infrastructure.config.JacksonConfig;
 import org.iban4j.Iban;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,19 +19,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
-class RecordEntryCsvReaderTest {
-    private static final String TEST_CSV_PATH = "/records.csv";
+class RecordEntryJsonReaderTest {
+    private static final String TEST_JSON_PATH = "/records.json";
+    private static final ObjectMapper objectMapper = new JacksonConfig().objectMapper();
     private RecordEntryReader<InputStream> reader;
 
     @BeforeEach
     void setUp() {
-        reader = new RecordCsvEntryReader(new RecordEntryCsvMapper());
+        reader = new RecordEntryJsonReader(new RecordEntryJsonMapper(objectMapper));
     }
 
     @Test
     void shouldReadFromCsv() throws IOException {
-        try (final InputStream is = getClass().getResourceAsStream(TEST_CSV_PATH)) {
-            assertNotNull(is, "Csv not found at" + TEST_CSV_PATH);
+        try (final InputStream is = getClass().getResourceAsStream(TEST_JSON_PATH)) {
+            assertNotNull(is, "Csv not found at" + TEST_JSON_PATH);
             final Stream<RecordEntry> records = reader.read(is);
             try (records) {
                 var recordsList = records.toList();
