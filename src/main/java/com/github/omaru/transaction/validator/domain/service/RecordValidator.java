@@ -7,6 +7,9 @@ import com.github.omaru.transaction.validator.infrastructure.persistence.jpa.Not
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 @Component
 @RequiredArgsConstructor
 public class RecordValidator {
@@ -14,8 +17,12 @@ public class RecordValidator {
     private final RecordService recordService;
 
     public FailedRecord validateEndBalance(RecordEntry record) {
-        return record.getStartBalance()
-                .add(record.getMutation()).equals(record.getEndBalance()) ? VALID_RECORD :
+        BigDecimal calculated = record.getStartBalance()
+                .add(record.getMutation())
+                .setScale(2, RoundingMode.HALF_EVEN);
+        BigDecimal expected = record.getEndBalance()
+                .setScale(2, RoundingMode.HALF_EVEN);
+        return calculated.compareTo(expected) == 0 ? VALID_RECORD :
                 FailedRecord.builder().record(record).reason(Reason.INCORRECT_END_BALANCE).build();
     }
 
