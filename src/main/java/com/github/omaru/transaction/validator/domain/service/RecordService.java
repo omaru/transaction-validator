@@ -5,4 +5,6 @@ import com.github.omaru.transaction.validator.infrastructure.persistence.jpa.Not
 
 public interface RecordService {
     RecordEntry save(RecordEntry record) throws NotUniqueReferenceNumberException;
+
+    void deleteAll();
 }

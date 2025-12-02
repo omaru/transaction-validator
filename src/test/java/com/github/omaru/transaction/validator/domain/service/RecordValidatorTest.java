@@ -1,28 +1,39 @@
 package com.github.omaru.transaction.validator.domain.service;
 
+import com.github.omaru.transaction.validator.domain.model.FailedRecord;
 import com.github.omaru.transaction.validator.domain.model.Reason;
 import com.github.omaru.transaction.validator.domain.model.RecordEntry;
+import com.github.omaru.transaction.validator.infrastructure.persistence.jpa.NotUniqueReferenceNumberException;
+import lombok.SneakyThrows;
+import lombok.val;
 import org.iban4j.Iban;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class RecordValidatorTest {
+    @Mock
+    private RecordService recordService;
     private RecordValidator validator;
 
 
     @BeforeEach
     void setUp() {
-        validator = new RecordValidator();
+        validator = new RecordValidator(recordService);
     }
 
     @ParameterizedTest
@@ -38,6 +49,32 @@ class RecordValidatorTest {
             assertThat(result.getReasons().getFirst()).isEqualTo(Reason.INCORRECT_END_BALANCE);
         }
 
+    }
+
+    @SneakyThrows
+    @Test
+    void shouldValidateUniqueTransactionReference() {
+        var recordEntry = RecordEntry.builder()
+                .id(UUID.randomUUID())
+                .transactionReference(194261L)
+                .accountNumber(Iban.valueOf("NL91RABO0315273637"))
+                .description("Book John Smith")
+                .startBalance(BigDecimal.valueOf(21.6))
+                .mutation(BigDecimal.valueOf(-41.83))
+                .endBalance(BigDecimal.valueOf(-20.23))
+                .build();
+
+        when(recordService.save(any()))
+                .thenReturn(recordEntry);
+
+        when(recordService.save(any()))
+                .thenThrow(new NotUniqueReferenceNumberException(null, recordEntry));
+
+        val result = validator.validateUniqueTransactionReference(recordEntry);
+
+        assertThat(result).isEqualTo(FailedRecord.builder()
+                .record(recordEntry)
+                .reason(Reason.DUPLICATE_REFERENCE).build());
     }
 
     @ParameterizedTest

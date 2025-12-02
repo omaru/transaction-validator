@@ -1,4 +1,4 @@
-package com.github.omaru.transaction.validator.domain.model;
+package com.github.omaru.transaction.validator.application.response;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,8 +7,8 @@ import java.util.List;
 
 @Data
 @Builder
-public class Report {
+public class ReportResponse {
     private Integer totalRecordsRead;
     private Integer totalFailedRecords;
-    private List<FailedRecord> failedRecords;
+    private List<FailedRecordResponse> failedRecords;
 }
