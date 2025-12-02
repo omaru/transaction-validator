@@ -30,19 +30,19 @@ class RecordEntryJsonReaderTest {
     }
 
     @Test
-    void shouldReadFromCsv() throws IOException {
+    void shouldReadFromJson() throws IOException {
         try (final InputStream is = getClass().getResourceAsStream(TEST_JSON_PATH)) {
-            assertNotNull(is, "Csv not found at" + TEST_JSON_PATH);
+            assertNotNull(is, "Json not found at" + TEST_JSON_PATH);
             final Stream<RecordEntry> records = reader.read(is);
             try (records) {
                 var recordsList = records.toList();
                 var recordEntry = recordsList.getFirst();
-                assertThat(recordEntry.getTransactionReference()).isEqualTo(194261L);
-                assertThat(recordEntry.getAccountNumber()).isEqualTo(Iban.valueOf("NL91RABO0315273637"));
-                assertThat(recordEntry.getDescription()).isEqualTo("Book John Smith");
-                assertThat(recordEntry.getStartBalance()).isEqualTo(BigDecimal.valueOf(21.6));
-                assertThat(recordEntry.getMutation()).isEqualTo(BigDecimal.valueOf(-41.83));
-                assertThat(recordEntry.getEndBalance()).isEqualTo(BigDecimal.valueOf(-20.23));
+                assertThat(recordEntry.getTransactionReference()).isEqualTo(130498L);
+                assertThat(recordEntry.getAccountNumber()).isEqualTo(Iban.valueOf("NL69ABNA0433647324"));
+                assertThat(recordEntry.getDescription()).isEqualTo("Book Jan Theuß");
+                assertThat(recordEntry.getStartBalance()).isEqualTo(BigDecimal.valueOf(26.9));
+                assertThat(recordEntry.getMutation()).isEqualTo(BigDecimal.valueOf(-18.78));
+                assertThat(recordEntry.getEndBalance()).isEqualTo(BigDecimal.valueOf(8.12));
                 assertThat(recordsList.size()).isEqualTo(10);
             }
         }

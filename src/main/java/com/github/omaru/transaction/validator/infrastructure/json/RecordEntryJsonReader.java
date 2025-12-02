@@ -1,7 +1,6 @@
 package com.github.omaru.transaction.validator.infrastructure.json;
 
 import com.fasterxml.jackson.databind.MappingIterator;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.omaru.transaction.validator.application.port.RecordEntryReader;
 import com.github.omaru.transaction.validator.domain.model.RecordEntry;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,7 @@ import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-@Component
+@Component("recordEntryJsonReader")
 @Slf4j
 @RequiredArgsConstructor
 public class RecordEntryJsonReader implements RecordEntryReader<InputStream> {
@@ -24,13 +23,13 @@ public class RecordEntryJsonReader implements RecordEntryReader<InputStream> {
     @Override
     public Stream<RecordEntry> read(InputStream inputStream) {
         try {
-            MappingIterator<RecordEntry> it =
-                    recordEntryJsonMapper.getObjectMapper().readerFor(RecordEntry.class).readValues(inputStream);
+            MappingIterator<RecordEntryJson> it =
+                    recordEntryJsonMapper.getObjectMapper().readerFor(RecordEntryJson.class).readValues(inputStream);
 
-            Spliterator<RecordEntry> spliterator =
+            Spliterator<RecordEntryJson> spliterator =
                     Spliterators.spliteratorUnknownSize(it, java.util.Spliterator.ORDERED);
 
-            return StreamSupport.stream(spliterator, false)
+            return StreamSupport.stream(spliterator, false).map(recordEntryJsonMapper::toDomain)
                     .onClose(() -> {
                         try {
                             it.close();
