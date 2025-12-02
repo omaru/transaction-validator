@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @Builder
 public class Report {
-    private Long totalRecordsRead;
-    private Long totalFailedRecords;
+    private Integer totalRecordsRead;
+    private Integer totalFailedRecords;
     private List<FailedRecord> failedRecords;
 }

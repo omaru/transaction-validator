@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
 
@@ -13,6 +14,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @IntegrationTest
+@Sql(
+        scripts = {"/db/record_entries.sql"},
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS
+)
 public class RecordRepositoryIT {
     @Autowired
     private RecordRepository recordRepository;
@@ -20,6 +25,12 @@ public class RecordRepositoryIT {
     @AfterEach
     void tearDown() {
         recordRepository.deleteAll();
+    }
+
+    @Test
+    void shouldDeleteExistingEntries() {
+        recordRepository.deleteAll();
+        assertThat(recordRepository.findAll()).isEmpty();
     }
 
     @Test

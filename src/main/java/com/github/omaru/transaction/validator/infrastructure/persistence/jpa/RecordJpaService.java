@@ -27,4 +27,9 @@ public class RecordJpaService implements RecordService {
             }
         }
     }
+
+    @Override
+    public void deleteAll() {
+        recordRepository.deleteAll();
+    }
 }
