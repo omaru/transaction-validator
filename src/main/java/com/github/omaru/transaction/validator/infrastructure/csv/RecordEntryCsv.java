@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Data
 public class RecordEntryCsv {
     @CsvBindByName(column = "Reference")
-    private Long transactionReference;
+    private Long reference;
     @CsvBindByName(column = "AccountNumber")
     private String accountNumber;
     @CsvBindByName(column = "Description")

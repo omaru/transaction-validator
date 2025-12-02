@@ -19,7 +19,7 @@ import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-@Component
+@Component("recordEntryCsvReader")
 @RequiredArgsConstructor
 @Slf4j
 public class RecordCsvEntryReader implements RecordEntryReader<InputStream> {

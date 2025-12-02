@@ -1,5 +1,6 @@
 package com.github.omaru.transaction.validator.infrastructure.csv;
 
+import com.github.omaru.transaction.validator.application.port.RecordEntryReader;
 import com.github.omaru.transaction.validator.domain.model.RecordEntry;
 import org.iban4j.Iban;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ExtendWith(MockitoExtension.class)
 class RecordEntryCsvReaderTest {
     private static final String TEST_CSV_PATH = "/records.csv";
-    private RecordCsvEntryReader reader;
+    private RecordEntryReader<InputStream> reader;
 
     @BeforeEach
     void setUp() {

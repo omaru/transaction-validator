@@ -18,7 +18,7 @@ class RecordEntryCsvMapperTest {
     @Test
     void shouldMapCsvToDomain() {
         RecordEntryCsv recordEntryCsv = new RecordEntryCsv();
-        recordEntryCsv.setTransactionReference(194261L);
+        recordEntryCsv.setReference(194261L);
         recordEntryCsv.setAccountNumber("NL91RABO0315273637");
         recordEntryCsv.setDescription("Book John Smith");
         recordEntryCsv.setStartBalance(new java.math.BigDecimal("21.6"));

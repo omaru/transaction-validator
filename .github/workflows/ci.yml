@@ -1,8 +1,6 @@
 name: CI Pipeline
 
 on:
-  push:
-    branches: [ "**" ]
   pull_request:
     branches: [ "**" ]
 
@@ -20,6 +18,6 @@ jobs:
       - name: Run unit tests
         run: mvn -B clean test
       - name: Run integration tests
-        run: mvn --no-transfer-progress -DskipTests=true verify -P integration
+        run: mvn --no-transfer-progress -DskipTests=true verify
       - name: Security CVE Scan
         run: mvn -B org.owasp:dependency-check-maven:check -Dnvd.api.key=${{ secrets.NVD_API_KEY }}

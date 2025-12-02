@@ -1,7 +1,14 @@
 spring:
   application:
     name: transaction-validator
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
-      - org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration
+  datasource:
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:postgresql:latest:///transaction_validator
+    username: user
+    password: password
+  flyway:
+    enabled: true
+  jpa:
+    properties:
+      hibernate:
+        default_schema: "transaction_validator"
