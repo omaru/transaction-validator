@@ -1,8 +1,7 @@
-package com.github.omaru.transaction.validator.infrastructure.repository;
+package com.github.omaru.transaction.validator.infrastructure.persistence.jpa;
 
-import com.github.omaru.transaction.validator.infrastructure.config.IntegrationTest;
+import com.github.omaru.transaction.validator.test.util.IntegrationTest;
 import com.github.omaru.transaction.validator.infrastructure.persistence.entity.RecordEntity;
-import com.github.omaru.transaction.validator.infrastructure.persistence.jpa.RecordRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

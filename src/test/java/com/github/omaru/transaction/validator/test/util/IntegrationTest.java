@@ -1,4 +1,4 @@
-package com.github.omaru.transaction.validator.infrastructure.config;
+package com.github.omaru.transaction.validator.test.util;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
