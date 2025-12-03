@@ -22,7 +22,7 @@ class RecordEntryJsonMapperTest {
 
     @Test
     void shouldMapJsonToDomain() {
-        RecordEntryJson recordEntryJson = new RecordEntryJson();
+        var recordEntryJson = new RecordEntryJson();
         recordEntryJson.setReference(194261L);
         recordEntryJson.setAccountNumber("NL91RABO0315273637");
         recordEntryJson.setDescription("Book John Smith");

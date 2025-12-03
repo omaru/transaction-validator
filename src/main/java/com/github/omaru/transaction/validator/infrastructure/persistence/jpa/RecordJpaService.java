@@ -4,11 +4,13 @@ import com.github.omaru.transaction.validator.domain.model.RecordEntry;
 import com.github.omaru.transaction.validator.domain.service.RecordService;
 import com.github.omaru.transaction.validator.infrastructure.persistence.jpa.mappper.RecordEntryMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Profile("db")
 public class RecordJpaService implements RecordService {
     private final RecordRepository recordRepository;
     private final RecordEntryMapper mapper;
