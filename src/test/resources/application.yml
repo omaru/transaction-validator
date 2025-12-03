@@ -12,3 +12,5 @@ spring:
     properties:
       hibernate:
         default_schema: "transaction_validator"
+  profiles:
+    default: db
