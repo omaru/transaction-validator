@@ -7,7 +7,7 @@ Gets a list of transactions and validates whether  transaction numbers are dupli
 ``` java -jar target/transaction-validator-0.0.1-SNAPSHOT.jar```
 ## Assumptions and Constraints
 - Input files are either in CSV or JSON format.
-- Response is generated in HTML and JSON format.
+- Response is generated in HTML or JSON format.
 - Input files are small enough to be processed in memory. (50MB max)
 - Swagger UI is used for testing the API but on small files only.
 - For ```10MB``` + files preferable use CURL or another tooling to call the API
