@@ -1,6 +1,7 @@
 # Transaction Validator
 Gets a list of transactions and validates whether  transaction numbers are duplicated and balances are ok per record.
 ## Installation
+- Java 21 required
 ### Compile
 ``` mvn clean package```
 ### Run

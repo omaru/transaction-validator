@@ -27,7 +27,7 @@
         <url/>
     </scm>
     <properties>
-        <java.version>22</java.version>
+        <java.version>21</java.version>
         <org.testcontainers.version>1.19.7</org.testcontainers.version>
         <springdoc.version>3.0.0</springdoc.version>
         <swagger.annotations.version>2.2.10</swagger.annotations.version>
